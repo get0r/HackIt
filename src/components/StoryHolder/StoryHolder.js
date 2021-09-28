@@ -1,13 +1,13 @@
 import React from 'react';
-import Stories from '../../components/Stories/Stories';
+import Stories from './Stories/Stories';
 import HolderTitle from './HolderTitle';
 
-const StoryHolder = () => {
+const StoryHolder = ({ topTitle, stories }) => {
     return (
-        <div className="w-full flex">
+        <div className="w-full flex py-6">
             <div className="w-11/12">
-                <HolderTitle title="Top Stories" />
-                <Stories />
+                <HolderTitle title={ topTitle } />
+                <Stories stories={ stories } />
             </div>
             <div className="w-1/12 pl-6 items-center flex">
                 <div className="w-11 cursor-pointer">
