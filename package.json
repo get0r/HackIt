@@ -12,10 +12,11 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run build:style && react-scripts start",
+    "build": "npm run build:style && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:style": "tailwindcss build -i src/assets/tailwind.css -o src/assets/style.output.css"
   },
   "eslintConfig": {
     "extends": [
