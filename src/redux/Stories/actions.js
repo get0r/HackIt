@@ -1,4 +1,5 @@
 import * as actionTypes from './action-types';
+import * as ApiFunctions from '../../api/hackerAPI';
 
 const loadTopStoriesBegin = () => {
     return {
@@ -7,10 +8,10 @@ const loadTopStoriesBegin = () => {
     };
 };
 
-const loadTopStoriesSuccess = (topStories) => {
+const loadTopStoriesSuccess = ({ list, detail }) => {
     return {
         type: actionTypes.LOAD_TOP_STORIES_SUCCESS,
-        payload: topStories,
+        payload: { list, detail },
     };
 };
 
@@ -24,6 +25,20 @@ const loadTopStoriesFail = (error) => {
 export const loadTopStories = () => {
     return async dispatch => {
         dispatch(loadTopStoriesBegin());
-
-    }
-}
+        try {
+            const storyList = await ApiFunctions.getTopStoriesList();
+            const storyIdList = storyList.data;
+            const storyDetailList = [];
+            for (let i = 0; i < 4; i++) {
+                const storyDetail = await ApiFunctions.getTopStoriesDetail(storyIdList[i]);
+                storyDetailList.push(storyDetail.data);
+            }
+            dispatch(loadTopStoriesSuccess({
+                list: storyIdList,
+                detail: storyDetailList,
+            }));
+        } catch (err) {
+            dispatch(loadTopStoriesFail(err.message));
+        }
+    };
+};

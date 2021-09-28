@@ -6,7 +6,7 @@ const Stories = () => {
 
     const renderStories = () => {
         return stories.map(story => (
-            <Story />
+            <Story key={ story.id } story={ story } />
         ));
     };
 
