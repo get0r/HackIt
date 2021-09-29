@@ -1,9 +1,7 @@
 import React from 'react';
 import Story from './Story';
 
-const Stories = () => {
-    const stories = [1, 2, 3, 4];
-
+const Stories = ({ stories }) => {
     const renderStories = () => {
         return stories.map(story => (
             <Story key={ story.id } story={ story } />

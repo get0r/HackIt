@@ -32242,6 +32242,136 @@ video {
   content: none;
 }
 
+.animation-delay-75 {
+  -webkit-animation-delay: 75ms;
+          animation-delay: 75ms;
+}
+
+.animation-delay-100 {
+  -webkit-animation-delay: 100ms;
+          animation-delay: 100ms;
+}
+
+.animation-delay-150 {
+  -webkit-animation-delay: 150ms;
+          animation-delay: 150ms;
+}
+
+.animation-delay-200 {
+  -webkit-animation-delay: 200ms;
+          animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  -webkit-animation-delay: 300ms;
+          animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  -webkit-animation-delay: 400ms;
+          animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+  -webkit-animation-delay: 500ms;
+          animation-delay: 500ms;
+}
+
+.animation-delay-600 {
+  -webkit-animation-delay: 600ms;
+          animation-delay: 600ms;
+}
+
+.animation-delay-700 {
+  -webkit-animation-delay: 700ms;
+          animation-delay: 700ms;
+}
+
+.animation-delay-800 {
+  -webkit-animation-delay: 800ms;
+          animation-delay: 800ms;
+}
+
+.animation-delay-900 {
+  -webkit-animation-delay: 900ms;
+          animation-delay: 900ms;
+}
+
+.animation-delay-1000 {
+  -webkit-animation-delay: 1000ms;
+          animation-delay: 1000ms;
+}
+
+.animation-delay-1100 {
+  -webkit-animation-delay: 1100ms;
+          animation-delay: 1100ms;
+}
+
+.animation-delay-1200 {
+  -webkit-animation-delay: 1200ms;
+          animation-delay: 1200ms;
+}
+
+.animation-delay-1300 {
+  -webkit-animation-delay: 1300ms;
+          animation-delay: 1300ms;
+}
+
+.animation-delay-1400 {
+  -webkit-animation-delay: 1400ms;
+          animation-delay: 1400ms;
+}
+
+.animation-delay-1500 {
+  -webkit-animation-delay: 1500ms;
+          animation-delay: 1500ms;
+}
+
+.animation-delay-2000 {
+  -webkit-animation-delay: 2000ms;
+          animation-delay: 2000ms;
+}
+
+.animation-delay-3000 {
+  -webkit-animation-delay: 3000ms;
+          animation-delay: 3000ms;
+}
+
+.animation-delay-4000 {
+  -webkit-animation-delay: 4000ms;
+          animation-delay: 4000ms;
+}
+
+.animation-delay-5000 {
+  -webkit-animation-delay: 5000ms;
+          animation-delay: 5000ms;
+}
+
+.animation-delay-6000 {
+  -webkit-animation-delay: 6000ms;
+          animation-delay: 6000ms;
+}
+
+.animation-delay-7000 {
+  -webkit-animation-delay: 7000ms;
+          animation-delay: 7000ms;
+}
+
+.animation-delay-8000 {
+  -webkit-animation-delay: 8000ms;
+          animation-delay: 8000ms;
+}
+
+.animation-delay-9000 {
+  -webkit-animation-delay: 9000ms;
+          animation-delay: 9000ms;
+}
+
+.animation-delay-none {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

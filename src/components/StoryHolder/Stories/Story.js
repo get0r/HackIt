@@ -1,16 +1,22 @@
 import React from 'react'
+import image from '../../../assets/user.png';
 
-const Story = ({ title, time, by, score }) => {
+const Story = ({ story }) => {
+    const { title, url, time, by, score } = story;
+
+    const handleStoryClick = e => {
+        window.open(url, '_blank');
+    }
     return (
-        <div className="rounded-xl shadow-2xl">
-            <img alt="" className="rounded-t-xl w-full h-36 object-cover" src="https://source.unsplash.com/random" />
-            <div className="flex flex-col p-7">
-                <h2 className="text-xl font-bold mt-1">{ title }</h2>
-                <p className="text-base text-gray-600 mt-1">{ time }</p>
-                <div className="flex flex-row mt-5 items-center justify-start">
-                    <img alt="" className="rounded-2xl mr-2 w-6" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" />
+        <div className="cursor-pointer hover:shadow-xl rounded-xl shadow-2xl" onClick={ handleStoryClick }>
+            <img alt="" className="rounded-t-xl w-full h-36 object-cover" src={ `https://source.unsplash.com/random?sig=${Math.floor(Math.random() * 100)}` } />
+            <div className="flex flex-col px-4 py-2 justify-between">
+                <h2 className="text-sm font-bold mt-1">{ title }</h2>
+                <p className="text-sm text-gray-600 mt-1 font-mono">{ new Date(time * 1000).toUTCString().slice(0, 11) }</p>
+                <div className="flex flex-row mt-5 items-center justify-start justify-self-end">
+                    <img alt="" className="rounded-2xl mr-2 w-6" src={ image } />
                     <p className="font-bold text-sm mr-2">{ by }</p>
-                    <p className="text-gray-400 text-sm self-end justify-self-end">{ score } score</p>
+                    <p className="text-gray-400 text-xs justify-self-end">{ score } score</p>
                 </div>
             </div>
         </div>

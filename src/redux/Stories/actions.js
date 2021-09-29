@@ -4,7 +4,6 @@ import * as ApiFunctions from '../../api/hackerAPI';
 const loadTopStoriesBegin = () => {
     return {
         type: actionTypes.LOAD_TOP_STORIES_BEGIN,
-        payload: null,
     };
 };
 
@@ -30,7 +29,7 @@ export const loadTopStories = () => {
             const storyIdList = storyList.data;
             const storyDetailList = [];
             for (let i = 0; i < 4; i++) {
-                const storyDetail = await ApiFunctions.getTopStoriesDetail(storyIdList[i]);
+                const storyDetail = await ApiFunctions.getItemDetail(storyIdList[i]);
                 storyDetailList.push(storyDetail.data);
             }
             dispatch(loadTopStoriesSuccess({

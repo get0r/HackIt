@@ -1,42 +1,42 @@
 import * as actionTypes from './action-types';
 
 const INITIAL_STATE = {
-    topStories: {
+    topJobs: {
         list: [],
         detail: [],
         loading: false,
         error: null,
-    },
+    }
 };
 
-export const storiesReducer = (state = INITIAL_STATE, action) => {
+export const jobsReducer = (state = INITIAL_STATE, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case actionTypes.LOAD_TOP_STORIES_BEGIN:
+        case actionTypes.LOAD_TOP_JOBS_BEGIN:
             return {
                 ...state,
-                topStories: {
-                    ...state.topStories,
+                topJobs: {
+                    ...state.topJobs,
                     loading: true,
                 }
             };
-        case actionTypes.LOAD_TOP_STORIES_SUCCESS:
+        case actionTypes.LOAD_TOP_JOBS_SUCCESS:
             return {
                 ...state,
-                topStories: {
-                    ...state.topStories,
+                topJobs: {
+                    ...state.topJobs,
                     list: [...payload.list],
-                    detail: [...state.topStories.detail, ...payload.detail],
+                    detail: [...state.topJobs.detail, ...payload.detail],
                     loading: false,
                     error: null,
                 },
             }
-        case actionTypes.LOAD_TOP_STORIES_FAIL:
+        case actionTypes.LOAD_TOP_JOBS_FAIL:
             return {
                 ...state,
-                topStories: {
-                    ...state.topStories,
+                topJobs: {
+                    ...state.topJobs,
                     loading: false,
                     error: payload,
                 },
