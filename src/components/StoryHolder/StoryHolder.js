@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Stories from './Stories/Stories';
 import HolderTitle from './HolderTitle';
-import Loader from './Stories/Loader';
+import Loader from '../Loader';
 import ErrorMessage from './ErrorMessage';
 
 const StoryHolder = ({ topTitle, isStories, stories, isLoading, error }) => {
