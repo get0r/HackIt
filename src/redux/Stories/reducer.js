@@ -7,6 +7,11 @@ const INITIAL_STATE = {
         loading: false,
         error: null,
     },
+    allStories: {
+        detail: [],
+        offset: 0,
+        error: null,
+    }
 };
 
 export const storiesReducer = (state = INITIAL_STATE, action) => {
@@ -38,6 +43,31 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                 topStories: {
                     ...state.topStories,
                     loading: false,
+                    error: payload,
+                },
+            }
+        case actionTypes.LOAD_STORY_OFFSET:
+            return {
+                ...state,
+                allStories: {
+                    ...state.allStories,
+                    offset: payload
+                }
+            };
+        case actionTypes.LOAD_STORY_SUCCESS:
+            return {
+                ...state,
+                allStories: {
+                    ...state.allStories,
+                    detail: [...state.allStories.detail, payload],
+                    error: null,
+                },
+            }
+        case actionTypes.LOAD_STORY_FAIL:
+            return {
+                ...state,
+                allStories: {
+                    ...state.allStories,
                     error: payload,
                 },
             }

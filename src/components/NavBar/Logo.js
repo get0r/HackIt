@@ -1,11 +1,14 @@
 import React from 'react';
+import logo from '../../assets/logo.png';
 
 const Logo = () => {
     return (
-        <div className="text-2xl text-white font-semibold inline-flex items-center">
-            <img className="w-10 mr-4" src="https://seeklogo.com/images/T/tailwind-css-logo-5AD4175897-seeklogo.com.png" alt="logo" />
-            <span>HaCKiT</span>
-        </div>
+        <a href="/">
+            <div className="text-xl text-white font-semibold inline-flex items-center justify-center">
+                <img className="w-6 mr-4" src={ logo } alt="logo" />
+                <span>HackIt</span>
+            </div>
+        </a>
     );
 };
 

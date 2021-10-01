@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import Stories from '../components/StoryHolder/Stories/Stories';
+import { connect } from 'react-redux';
+import { loadStory } from '../redux/Stories/actions';
 
-const AllStories = (props) => {
+const AllStories = ({ allStories, dispatch }) => {
+
+    console.log('in all stories', allStories);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -19,27 +23,34 @@ const AllStories = (props) => {
     }
 
     useEffect(() => {
-        const loadStoriesOnVisibility = () => {
-            if (isElementOnScreen(document.getElementById('infiniteLoader'))) {
-                if (!isLoading) {
-                    loadMoreStories();
-                }
-            }
-        };
+        dispatch(loadStory())
+        // const loadStoriesOnVisibility = () => {
+        //     if (isElementOnScreen(document.getElementById('infiniteLoader'))) {
+        //         if (!isLoading) {
+        //             loadMoreStories();
+        //         }
+        //     }
+        // };
 
-        window.addEventListener('scroll', e => {
-            loadStoriesOnVisibility();
-        });
+        // window.addEventListener('scroll', e => {
+        //     loadStoriesOnVisibility();
+        // });
 
-        loadStoriesOnVisibility();
+        // loadStoriesOnVisibility();
     }, []);
 
     return (
         <section className="w-11/12 px-2 py-4 my-4 mx-auto">
-            <Stories stories={ [1, 54, 45, 6, 7, 88, 2, 3, 4, 5, 6, 7, 8, 9, 1] } />
+            { allStories ? <Stories stories={ allStories } /> : null }
             <Loader id='infiniteLoader' />
         </section>
     );
 };
 
-export default AllStories;
+const mapStateToProps = state => {
+    return {
+        allStories: state.stories.allStories.detail
+    }
+};
+
+export default connect(mapStateToProps, null)(AllStories);

@@ -7,3 +7,4 @@ const hackAPI = axios.create({
 export const getTopStoriesList = () => hackAPI.get('/topstories.json');
 export const getItemDetail = (storyId) => hackAPI.get(`/item/${storyId}.json`);
 export const getTopJobsList = () => hackAPI.get('/jobstories.json');
+export const getStoryOffset = () => hackAPI.get('maxitem.json');
