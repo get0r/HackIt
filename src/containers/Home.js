@@ -7,7 +7,6 @@ import { loadTopJobs } from '../redux/Jobs/actions';
 const Home = ({ topStories, topJobs, storiesLoading, jobsLoading, storiesError, jobsError, dispatch }) => {
     useEffect(() => {
         if (topStories.length === 0) {
-            console.log('Now Dispatching top stories', topStories.length);
             dispatch(loadTopStories());
         }
         if (topJobs.length === 0)

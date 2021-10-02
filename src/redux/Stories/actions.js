@@ -42,6 +42,12 @@ export const loadTopStories = () => {
     };
 };
 
+const loadStoryBegin = () => {
+    return {
+        type: actionTypes.LOAD_STORY_BEGIN
+    }
+};
+
 const loadStorySuccess = story => {
     return {
         type: actionTypes.LOAD_STORY_SUCCESS,
@@ -56,25 +62,28 @@ const loadStoryFail = err => {
     };
 };
 
-const loadStoryOffset = offset => {
+const IncrementStoryOffset = () => {
     return {
-        type: actionTypes.LOAD_STORY_OFFSET,
-        payload: offset
+        type: actionTypes.INCREMENT_OFFSET,
     };
 };
 
 export const loadStory = () => {
     return async (dispatch, getState) => {
+        dispatch(loadStoryBegin());
         try {
-            if (getState().stories.allStories.offset === 0) {
-                const offsetRes = await ApiFunctions.getStoryOffset();
-                dispatch(loadStoryOffset(offsetRes.data));
+            if (getState().stories.topStories.list.length === 0) {
+                const topStoriesListRes = await ApiFunctions.getTopStoriesList();
+                dispatch(loadTopStoriesSuccess({ list: topStoriesListRes.data, detail: [] }));
             }
-
-            const storyRes = await ApiFunctions.getItemDetail(getState().stories.allStories.offset);
-            dispatch(loadStorySuccess(storyRes.data));
+            const index = getState().stories.allStories.offset;
+            if (index > getState().stories.topStories.list.length) return;
+            const itemId = getState().stories.topStories.list[index];
+            const storyRes = await ApiFunctions.getItemDetail(itemId);
+            dispatch(IncrementStoryOffset());
+            return dispatch(loadStorySuccess(storyRes.data));
         } catch (error) {
-            dispatch(loadStoryFail(error));
+            return dispatch(loadStoryFail(error));
         }
     }
 }

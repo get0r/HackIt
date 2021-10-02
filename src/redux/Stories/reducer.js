@@ -10,6 +10,7 @@ const INITIAL_STATE = {
     allStories: {
         detail: [],
         offset: 0,
+        loading: false,
         error: null,
     }
 };
@@ -46,12 +47,20 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                     error: payload,
                 },
             }
-        case actionTypes.LOAD_STORY_OFFSET:
+        case actionTypes.INCREMENT_OFFSET:
             return {
                 ...state,
                 allStories: {
                     ...state.allStories,
-                    offset: payload
+                    offset: state.allStories.offset + 1,
+                }
+            };
+        case actionTypes.LOAD_STORY_BEGIN:
+            return {
+                ...state,
+                allStories: {
+                    ...state.allStories,
+                    loading: true,
                 }
             };
         case actionTypes.LOAD_STORY_SUCCESS:
@@ -61,6 +70,7 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                     ...state.allStories,
                     detail: [...state.allStories.detail, payload],
                     error: null,
+                    loading: false,
                 },
             }
         case actionTypes.LOAD_STORY_FAIL:
@@ -68,6 +78,7 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 allStories: {
                     ...state.allStories,
+                    loading: false,
                     error: payload,
                 },
             }

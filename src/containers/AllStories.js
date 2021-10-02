@@ -3,12 +3,13 @@ import Loader from '../components/Loader';
 import Stories from '../components/StoryHolder/Stories/Stories';
 import { connect } from 'react-redux';
 import { loadStory } from '../redux/Stories/actions';
+import InfiniteLoader from '../components/InfiniteLoader';
 
-const AllStories = ({ allStories, dispatch }) => {
+const AllStories = ({ allStories, allJobs, isStoryLoading, isJobLoading, dispatch }) => {
 
-    console.log('in all stories', allStories);
+    const isStories = window.location.pathname === '/stories' ? true : false;
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     const isElementOnScreen = target => {
         var rect = target.getBoundingClientRect();
@@ -17,40 +18,55 @@ const AllStories = ({ allStories, dispatch }) => {
         return (rect.top > viewHeight) ? false : true;
     };
 
-    const loadMoreStories = () => {
-        //dispatch more here with page
-        console.log('loading now');
-    }
+    const loadOnVisibility = isStories => {
+        if (isElementOnScreen(document.getElementById('infiniteLoader'))) {
+            setIsVisible(true)
+            if (isStories) {
+                dispatch(loadStory());
+            }
+            else {
+                //dispatch(loadJob());
+            }
+        } else {
+            setIsVisible(false);
+        }
+    };
 
     useEffect(() => {
-        dispatch(loadStory())
-        // const loadStoriesOnVisibility = () => {
-        //     if (isElementOnScreen(document.getElementById('infiniteLoader'))) {
-        //         if (!isLoading) {
-        //             loadMoreStories();
-        //         }
-        //     }
-        // };
+        const onscrollListener = () => {
+            if (isElementOnScreen(document.getElementById('infiniteLoader')) && !isVisible) {
+                setIsVisible(true);
+            }
+        }
+        window.addEventListener('scroll', onscrollListener);
 
-        // window.addEventListener('scroll', e => {
-        //     loadStoriesOnVisibility();
-        // });
+        return () => window.removeEventListener('scroll', onscrollListener);
+    }, [])
 
-        // loadStoriesOnVisibility();
-    }, []);
+    useEffect(() => {
+        if (isStories) {
+            if (!isStoryLoading) {
+                loadOnVisibility(true);
+            }
+        } else {
+            if (!isJobLoading) {
+                loadOnVisibility(false)
+            }
+        }
+    }, [isVisible, allStories]);
 
     return (
-        <section className="w-11/12 px-2 py-4 my-4 mx-auto">
-            { allStories ? <Stories stories={ allStories } /> : null }
-            <Loader id='infiniteLoader' />
-        </section>
+        <InfiniteLoader allStories={ isStories ? allStories : allJobs } />
     );
 };
 
 const mapStateToProps = state => {
     return {
-        allStories: state.stories.allStories.detail
-    }
+        allStories: state.stories.allStories.detail,
+        allJobs: state.jobs.allJobs.detail,
+        isStoryLoading: state.stories.allStories.loading,
+        isJobLoading: state.jobs.allJobs.loading,
+    };
 };
 
 export default connect(mapStateToProps, null)(AllStories);
