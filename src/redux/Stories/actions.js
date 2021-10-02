@@ -85,5 +85,5 @@ export const loadStory = () => {
         } catch (error) {
             return dispatch(loadStoryFail(error));
         }
-    }
-}
+    };
+};

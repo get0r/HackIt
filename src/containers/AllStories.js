@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { loadStory } from '../redux/Stories/actions';
 import InfiniteLoader from '../components/InfiniteLoader';
 import ErrorMessage from '../components/StoryHolder/ErrorMessage';
+import { loadJob } from '../redux/Jobs/actions';
 
-const AllStories = ({ allStories, isLoading, error, dispatch }) => {
+const AllStories = ({ allStories, isLoading, error, loadSingleStory }) => {
 
-    console.log('in all Stories', allStories, isLoading, error)
     const [isVisible, setIsVisible] = useState(false);
 
     const isElementOnScreen = target => {
@@ -19,7 +19,7 @@ const AllStories = ({ allStories, isLoading, error, dispatch }) => {
     const loadStoriesOnVisibility = () => {
         if (isElementOnScreen(document.getElementById('infiniteLoader'))) {
             setIsVisible(true)
-            dispatch(loadStory());
+            loadSingleStory();
         } else {
             setIsVisible(false);
         }
@@ -49,12 +49,19 @@ const AllStories = ({ allStories, isLoading, error, dispatch }) => {
 
 const mapStateToProps = state => {
     const isStories = window.location.pathname === '/stories' ? true : false;
-
     return {
         allStories: isStories ? state.stories.allStories.detail : state.jobs.allJobs.detail,
         isLoading: isStories ? state.stories.allStories.loading : state.jobs.allJobs.loading,
         error: isStories ? state.stories.allStories.error : state.jobs.allJobs.error,
-    }
+    };
 };
 
-export default connect(mapStateToProps, null)(AllStories);
+const mapDispatchToProps = dispatch => {
+    const isStories = window.location.pathname === '/stories' ? true : false;
+
+    return {
+        loadSingleStory: () => isStories ? dispatch(loadStory()) : dispatch(loadJob())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllStories);

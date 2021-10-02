@@ -41,3 +41,52 @@ export const loadTopJobs = () => {
         }
     };
 };
+
+const loadJobBegin = () => {
+    return {
+        type: actionTypes.LOAD_JOB_BEGIN
+    }
+};
+
+const loadJobSuccess = job => {
+    return {
+        type: actionTypes.LOAD_JOB_SUCCESS,
+        payload: job
+    };
+};
+
+const loadJobFail = err => {
+    return {
+        type: actionTypes.LOAD_JOB_FAIL,
+        payload: err,
+    };
+};
+
+const IncrementJobOffset = err => {
+    return {
+        type: actionTypes.INCREMENT_JOB_OFFSET,
+        payload: err,
+    };
+};
+
+
+export const loadJob = () => {
+    return async (dispatch, getState) => {
+        dispatch(loadJobBegin());
+        try {
+            if (getState().jobs.topJobs.list.length === 0) {
+                const topJobsListRes = await ApiFunctions.getTopJobsList();
+                dispatch(loadTopJobsSuccess({ list: topJobsListRes.data, detail: [] }));
+            }
+            const index = getState().jobs.allJobs.offset;
+            if (index > getState().jobs.topJobs.list.length) return;
+
+            const itemId = getState().jobs.topJobs.list[index];
+            const jobRes = await ApiFunctions.getItemDetail(itemId);
+            dispatch(IncrementJobOffset());
+            return dispatch(loadJobSuccess(jobRes.data));
+        } catch (error) {
+            return dispatch(loadJobFail(error));
+        }
+    };
+};

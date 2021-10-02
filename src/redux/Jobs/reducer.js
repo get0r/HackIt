@@ -8,7 +8,8 @@ const INITIAL_STATE = {
         error: null,
     },
     allJobs: {
-        list: [],
+        detail: [],
+        offset: 0,
         loading: false,
         error: null,
     }
@@ -42,6 +43,41 @@ export const jobsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 topJobs: {
                     ...state.topJobs,
+                    loading: false,
+                    error: payload,
+                },
+            }
+        case actionTypes.INCREMENT_JOB_OFFSET:
+            return {
+                ...state,
+                allJobs: {
+                    ...state.allJobs,
+                    offset: state.allJobs.offset + 1,
+                }
+            };
+        case actionTypes.LOAD_JOB_BEGIN:
+            return {
+                ...state,
+                allJobs: {
+                    ...state.allJobs,
+                    loading: true,
+                }
+            };
+        case actionTypes.LOAD_JOB_SUCCESS:
+            return {
+                ...state,
+                allJobs: {
+                    ...state.allJobs,
+                    detail: [...state.allJobs.detail, payload],
+                    error: null,
+                    loading: false,
+                },
+            }
+        case actionTypes.LOAD_JOB_FAIL:
+            return {
+                ...state,
+                allJobs: {
+                    ...state.allJobs,
                     loading: false,
                     error: payload,
                 },
