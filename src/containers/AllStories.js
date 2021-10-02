@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Loader from '../components/Loader';
-import Stories from '../components/StoryHolder/Stories/Stories';
 import { connect } from 'react-redux';
 import { loadStory } from '../redux/Stories/actions';
 import InfiniteLoader from '../components/InfiniteLoader';
+import ErrorMessage from '../components/StoryHolder/ErrorMessage';
 
-const AllStories = ({ allStories, allJobs, isStoryLoading, isJobLoading, dispatch }) => {
+const AllStories = ({ allStories, isLoading, error, dispatch }) => {
 
-    const isStories = window.location.pathname === '/stories' ? true : false;
-
+    console.log('in all Stories', allStories, isLoading, error)
     const [isVisible, setIsVisible] = useState(false);
 
     const isElementOnScreen = target => {
@@ -18,15 +16,10 @@ const AllStories = ({ allStories, allJobs, isStoryLoading, isJobLoading, dispatc
         return (rect.top > viewHeight) ? false : true;
     };
 
-    const loadOnVisibility = isStories => {
+    const loadStoriesOnVisibility = () => {
         if (isElementOnScreen(document.getElementById('infiniteLoader'))) {
             setIsVisible(true)
-            if (isStories) {
-                dispatch(loadStory());
-            }
-            else {
-                //dispatch(loadJob());
-            }
+            dispatch(loadStory());
         } else {
             setIsVisible(false);
         }
@@ -44,29 +37,24 @@ const AllStories = ({ allStories, allJobs, isStoryLoading, isJobLoading, dispatc
     }, [])
 
     useEffect(() => {
-        if (isStories) {
-            if (!isStoryLoading) {
-                loadOnVisibility(true);
-            }
-        } else {
-            if (!isJobLoading) {
-                loadOnVisibility(false)
-            }
+        if (!isLoading) {
+            loadStoriesOnVisibility();
         }
     }, [isVisible, allStories]);
 
     return (
-        <InfiniteLoader allStories={ isStories ? allStories : allJobs } />
+        error ? <ErrorMessage message={ error } /> : <InfiniteLoader allStories={ allStories } />
     );
 };
 
 const mapStateToProps = state => {
+    const isStories = window.location.pathname === '/stories' ? true : false;
+
     return {
-        allStories: state.stories.allStories.detail,
-        allJobs: state.jobs.allJobs.detail,
-        isStoryLoading: state.stories.allStories.loading,
-        isJobLoading: state.jobs.allJobs.loading,
-    };
+        allStories: isStories ? state.stories.allStories.detail : state.jobs.allJobs.detail,
+        isLoading: isStories ? state.stories.allStories.loading : state.jobs.allJobs.loading,
+        error: isStories ? state.stories.allStories.error : state.jobs.allJobs.error,
+    }
 };
 
 export default connect(mapStateToProps, null)(AllStories);

@@ -6,6 +6,11 @@ const INITIAL_STATE = {
         detail: [],
         loading: false,
         error: null,
+    },
+    allJobs: {
+        list: [],
+        loading: false,
+        error: null,
     }
 };
 
