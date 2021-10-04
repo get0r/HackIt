@@ -1,7 +1,14 @@
-import * as actionTypes from './action-types';
+import * as topActionTypes from './TopStories/action-types';
+import * as newActionTypes from './NewStories/action-types';
 
 const INITIAL_STATE = {
     topStories: {
+        list: [],
+        detail: [],
+        loading: false,
+        error: null,
+    },
+    newStories: {
         list: [],
         detail: [],
         loading: false,
@@ -19,7 +26,7 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case actionTypes.LOAD_TOP_STORIES_BEGIN:
+        case topActionTypes.LOAD_TOP_STORIES_BEGIN:
             return {
                 ...state,
                 topStories: {
@@ -27,7 +34,7 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                     loading: true,
                 }
             };
-        case actionTypes.LOAD_TOP_STORIES_SUCCESS:
+        case topActionTypes.LOAD_TOP_STORIES_SUCCESS:
             return {
                 ...state,
                 topStories: {
@@ -38,7 +45,7 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                     error: null,
                 },
             }
-        case actionTypes.LOAD_TOP_STORIES_FAIL:
+        case topActionTypes.LOAD_TOP_STORIES_FAIL:
             return {
                 ...state,
                 topStories: {
@@ -47,7 +54,35 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                     error: payload,
                 },
             }
-        case actionTypes.INCREMENT_OFFSET:
+        case newActionTypes.LOAD_NEW_STORIES_BEGIN:
+            return {
+                ...state,
+                newStories: {
+                    ...state.newStories,
+                    loading: true,
+                }
+            };
+        case newActionTypes.LOAD_NEW_STORIES_SUCCESS:
+            return {
+                ...state,
+                newStories: {
+                    ...state.newStories,
+                    list: [...payload.list],
+                    detail: [...state.newStories.detail, ...payload.detail],
+                    loading: false,
+                    error: null,
+                },
+            }
+        case newActionTypes.LOAD_NEW_STORIES_FAIL:
+            return {
+                ...state,
+                newStories: {
+                    ...state.newStories,
+                    loading: false,
+                    error: payload,
+                },
+            }
+        case topActionTypes.INCREMENT_OFFSET:
             return {
                 ...state,
                 allStories: {
@@ -55,7 +90,7 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                     offset: state.allStories.offset + 1,
                 }
             };
-        case actionTypes.LOAD_STORY_BEGIN:
+        case topActionTypes.LOAD_STORY_BEGIN:
             return {
                 ...state,
                 allStories: {
@@ -63,7 +98,7 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                     loading: true,
                 }
             };
-        case actionTypes.LOAD_STORY_SUCCESS:
+        case topActionTypes.LOAD_STORY_SUCCESS:
             return {
                 ...state,
                 allStories: {
@@ -73,7 +108,7 @@ export const storiesReducer = (state = INITIAL_STATE, action) => {
                     loading: false,
                 },
             }
-        case actionTypes.LOAD_STORY_FAIL:
+        case topActionTypes.LOAD_STORY_FAIL:
             return {
                 ...state,
                 allStories: {

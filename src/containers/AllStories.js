@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { loadStory } from '../redux/Stories/actions';
+
 import InfiniteLoader from '../components/InfiniteLoader';
 import ErrorMessage from '../components/StoryHolder/ErrorMessage';
 import { loadJob } from '../redux/Jobs/actions';
+import { loadStory } from '../redux/Stories/TopStories/actions';
 
 const AllStories = ({ allStories, isLoading, error, loadSingleStory }) => {
 

@@ -1,17 +1,22 @@
 import React, { useEffect } from 'react';
 import StoryHolder from '../components/StoryHolder/StoryHolder';
 import { connect } from 'react-redux';
-import { loadTopStories } from '../redux/Stories/actions';
-import { loadTopJobs } from '../redux/Jobs/actions';
 import Hero from '../components/Hero';
+import { loadTopStories } from '../redux/Stories/TopStories/actions';
+import { loadTopJobs } from '../redux/Jobs/actions';
+import { loadNewStories } from '../redux/Stories/NewStories/actions';
 
-const Home = ({ topStories, topJobs, storiesLoading, jobsLoading, storiesError, jobsError, dispatch }) => {
+const Home = ({ topStories, topJobs, newStories, newStoriesLoading, newStoriesError, storiesLoading, jobsLoading, storiesError, jobsError, dispatch }) => {
     useEffect(() => {
         if (topStories.length === 0) {
             dispatch(loadTopStories());
         }
-        if (topJobs.length === 0)
+        if (newStories.length === 0) {
+            dispatch(loadNewStories());
+        }
+        if (topJobs.length === 0) {
             dispatch(loadTopJobs())
+        }
     }, [dispatch]);
 
     return (
@@ -35,10 +40,13 @@ const Home = ({ topStories, topJobs, storiesLoading, jobsLoading, storiesError, 
 const mapStateToProps = state => {
     return {
         topStories: state.stories.topStories.detail,
+        newStories: state.stories.newStories.detail,
         topJobs: state.jobs.topJobs.detail,
         storiesLoading: state.stories.topStories.loading,
+        newStoriesLoading: state.stories.newStories.loading,
         jobsLoading: state.jobs.topJobs.loading,
         storiesError: state.stories.topStories.error,
+        newStoriesError: state.stories.newStories.error,
         jobsError: state.jobs.topJobs.error,
     };
 };
