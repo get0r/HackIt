@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NavMenu = () => {
     const path = window.location.pathname;
@@ -8,9 +9,9 @@ const NavMenu = () => {
     return (
         <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-4">
-                <a href="/" class={ path === '/' ? `${active} ${nonActive}` : `${nonActive}` } aria-current="page">Home</a>
-                <a href="/stories" class={ path === '/stories' ? `${active} ${nonActive}` : `${nonActive}` }>Stories</a>
-                <a href="/jobs" class={ path === '/jobs' ? `${active} ${nonActive}` : `${nonActive}` }>Jobs</a>
+                <Link to="/" class={ path === '/' ? `${active} ${nonActive}` : `${nonActive}` } aria-current="page">Home</Link>
+                <Link to="/stories" class={ path === '/stories' ? `${active} ${nonActive}` : `${nonActive}` }>Stories</Link>
+                <Link to="/jobs" class={ path === '/jobs' ? `${active} ${nonActive}` : `${nonActive}` }>Jobs</Link>
             </div>
         </div>
     );
